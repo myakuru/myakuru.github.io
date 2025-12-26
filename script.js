@@ -33,6 +33,25 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // Project card link handling
+    const projectCardLinks = document.querySelectorAll('.project-card-link');
+    projectCardLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            // Allow normal navigation unless it's a button click
+            if (!e.target.closest('.btn')) {
+                window.location.href = this.href;
+            }
+        });
+    });
+
+    // Prevent event bubbling for YouTube links
+    const youtubeButtons = document.querySelectorAll('.youtube-btn');
+    youtubeButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    });
 });
 
 // Navbar background on scroll
@@ -105,17 +124,13 @@ function animateSkillBars() {
     });
 }
 
-// Project card hover effects
+// Project card link handling
 document.addEventListener('DOMContentLoaded', function() {
-    const projectCards = document.querySelectorAll('.project-card');
-    
-    projectCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-10px) scale(1.02)';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) scale(1)';
+    // Prevent event bubbling for YouTube links
+    const youtubeButtons = document.querySelectorAll('.youtube-btn');
+    youtubeButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.stopPropagation();
         });
     });
 });
@@ -136,3 +151,47 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// YouTube Video Toggle Function
+function toggleVideo() {
+    const videoContainer = document.getElementById('video-container');
+    const iframe = document.getElementById('youtube-iframe');
+    
+    if (videoContainer.style.display === 'none') {
+        // 動画を表示
+        iframe.src = 'https://www.youtube.com/embed/G5eRSczVDn4?start=0&autoplay=1';
+        videoContainer.style.display = 'block';
+    } else {
+        // 動画を非表示
+        iframe.src = '';
+        videoContainer.style.display = 'none';
+    }
+}
+
+// Shader tabs functionality
+function initShaderTabs() {
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabPanels = document.querySelectorAll('.tab-panel');
+
+    if (tabButtons.length > 0) {
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const targetTab = this.getAttribute('data-tab');
+                
+                // Remove active class from all buttons and panels
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabPanels.forEach(panel => panel.classList.remove('active'));
+                
+                // Add active class to clicked button and corresponding panel
+                this.classList.add('active');
+                const targetPanel = document.getElementById(targetTab + '-panel');
+                if (targetPanel) {
+                    targetPanel.classList.add('active');
+                }
+            });
+        });
+    }
+}
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', initShaderTabs);

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>山田太郎 - Game Programmer Portfolio</title>
+    <title>myakuru - Game Programmer Portfolio</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -12,11 +12,11 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <h2>Taro Yamada</h2>
+                <a href="index.html"><h2>Todo Shion's Portfolio</h2></a>
             </div>
             <ul class="nav-menu">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
+                <li><a href="#introduction">About Me</a></li>
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#contact">Contact</a></li>
@@ -32,44 +32,72 @@
                 <p class="hero-subtitle">創造性と技術力でゲーム体験を設計</p>
                 <div class="hero-buttons">
                     <a href="#projects" class="btn btn-primary">作品を見る</a>
-                    <a href="#contact" class="btn btn-secondary">お問い合わせ</a>
+                    <a href="#contact" class="btn btn-secondary">リンク一覧</a>
                 </div>
             </div>
             <div class="hero-visual">
                 <div class="game-icons">
                     <i class="fas fa-gamepad"></i>
-                    <i class="fab fa-unity"></i>
-                    <i class="fas fa-code"></i>
+                    <i class="fab fa-github"></i>
+                    <i class="fab fa-youtube"></i>
                 </div>
             </div>
         </section>
 
-        <!-- About Section -->
-        <section id="about" class="about">
+        <!-- 自己紹介セクション -->
+        <section id="introduction" class="introduction">
             <div class="container">
                 <h2>About Me</h2>
-                <div class="about-content">
-                    <div class="about-text">
-                        <p>
-                            ゲーム開発に5年間携わり、Unity・Unreal Engineを使用した様々なジャンルのゲーム開発経験があります。
-                            特にゲームプレイプログラミング、UI/UX実装、パフォーマンス最適化を得意としています。
-                        </p>
-                        <p>
-                            プレイヤーに感動を与えるゲーム体験の創造を目指し、常に新しい技術の習得と改善に取り組んでいます。
+                <div class="intro-content">
+                    <div class="intro-header">
+                        <h3>こんにちは、藤堂司恩です。</h3>
+                        <p class="intro-summary">
+                            専門学校でC++・DirectXを用いた3Dゲームプログラミングを2年間学び、
+                            チーム開発から個人制作まで幅広い経験を積んできました。
                         </p>
                     </div>
-                    <div class="about-stats">
-                        <div class="stat">
-                            <span class="stat-number">5+</span>
-                            <span class="stat-label">年間経験</span>
+                    
+                    <div class="experience-timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h4>専門学校での学習</h4>
+                                <p>約2年間、C++とDirectXを用いたゲームプログラミングを専門的に学習</p>
+                            </div>
                         </div>
-                        <div class="stat">
-                            <span class="stat-number">15+</span>
-                            <span class="stat-label">完成作品</span>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h4>1年次：2Dアクションゲーム開発</h4>
+                                <p><strong>チームリーダーとして</strong>プロジェクト管理とメンバーサポートを担当<br>
+                                <span class="highlight">学内イベントで表彰を受賞</span></p>
+                                <div class="project-links">
+                                    <a href="https://www.youtube.com/watch?v=RSMAwuz6ngQ&t=179s" target="_blank" class="btn btn-small youtube-btn">
+                                        <i class="fab fa-youtube"></i> 動画を見る
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="stat">
-                            <span class="stat-number">3</span>
-                            <span class="stat-label">主要エンジン</span>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-icon">
+                                <i class="fas fa-cube"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h4>2年次：3Dアクションゲーム開発</h4>
+                                <p><strong>個人制作</strong>にてImGuiデバッグツール実装・HLSLシェーダープログラミングに挑戦<br>
+                                技術力の向上と実践的なスキルを習得</p>
+                                 <div class="project-links">
+                                    <a href="https://www.youtube.com/watch?v=G5eRSczVDn4" target="_blank" class="btn btn-small youtube-btn">
+                                        <i class="fab fa-youtube"></i> 動画を見る
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -83,28 +111,49 @@
                 <div class="skills-grid">
                     <div class="skill-category">
                         <h3><i class="fas fa-cogs"></i> Game Engines</h3>
-                        <div class="skill-list">
-                            <span class="skill-tag">Unity</span>
-                            <span class="skill-tag">Unreal Engine</span>
-                            <span class="skill-tag">Godot</span>
+                        <div class="skill-details">
+                            <div class="skill-item">
+                                <h4>Unreal Engine</h4>
+                                <p>IKリグ、IKリターゲッタを活用して、UnityモデルにUnrealアニメーションを適用</p>
+                                <div class="tech-tags">
+                                    <span class="tech-tag">IKリグ</span>
+                                    <span class="tech-tag">IKリターゲッタ</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="skill-category">
                         <h3><i class="fas fa-code"></i> Programming</h3>
-                        <div class="skill-list">
-                            <span class="skill-tag">C#</span>
-                            <span class="skill-tag">C++</span>
-                            <span class="skill-tag">JavaScript</span>
-                            <span class="skill-tag">Python</span>
+                        <div class="skill-details">
+                            <div class="skill-item">
+                                <h4>C++</h4>
+                                <p>DirectXを使用した3Dゲームエンジン開発、ゲームプレイプログラミング</p>
+                                <div class="tech-tags">
+                                    <span class="tech-tag">DirectX</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="skill-category">
                         <h3><i class="fas fa-paint-brush"></i> Graphics & Tools</h3>
-                        <div class="skill-list">
-                            <span class="skill-tag">Shader Programming</span>
-                            <span class="skill-tag">OpenGL</span>
-                            <span class="skill-tag">DirectX</span>
-                            <span class="skill-tag">Git</span>
+                        <div class="skill-details">
+                            <div class="skill-item">
+                                <h4>HLSL</h4>
+                                <p>シェーダープログラミングによる視覚的エフェクトの実装</p>
+                                <div class="tech-tags">
+                                    <span class="tech-tag">放射ブラー</span>
+                                    <span class="tech-tag">画面ノイズ</span>
+                                     <span class="tech-tag">カスケードシャドウマップ</span>
+                                     <span class="tech-tag">PBRベースのライティング計算</span>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <h4>Git</h4>
+                                <p>バージョン管理、チーム開発でのコード共有</p>
+                                <div class="tech-tags">
+                                    <span class="tech-tag">バージョン管理</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -114,70 +163,31 @@
         <!-- Projects Section -->
         <section id="projects" class="projects">
             <div class="container">
-                <h2>Featured Projects</h2>
+                <h2>Projects</h2>
                 <div class="projects-grid">
-                    <div class="project-card">
-                        <div class="project-image">
-                            <div class="placeholder-image">
-                                <i class="fas fa-rocket"></i>
+                    <a href="chronos-zero.html" class="project-card-link">
+                        <div class="project-card">
+                            <div class="project-image">
+                                <img src="images/Title.png" alt="Chronos Zero タイトル画面" class="project-main-image"
+                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="placeholder-image" style="display:none;">
+                                    <i class="fas fa-rocket"></i>
+                                </div>
+                            </div>
+                            <div class="project-info">
+                                <h3>Chronos Zero</h3>
+                                <p>＜就活作品＞3Dスタイリッシュアクションゲーム。</p>
+                                <div class="project-tech">
+                                    <span>DirectX</span>
+                                    <span>C++</span>
+                                    <span>HLSL</span>
+                                </div>
+                                <div class="project-links">
+                                    <span class="btn btn-small detail-btn">詳細を見る</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="project-info">
-                            <h3>Space Explorer</h3>
-                            <p>Unity製の3D宇宙探索ゲーム。物理演算とプロシージャル生成を活用。</p>
-                            <div class="project-tech">
-                                <span>Unity</span>
-                                <span>C#</span>
-                                <span>Shader Graph</span>
-                            </div>
-                            <div class="project-links">
-                                <a href="#" class="btn btn-small">Demo</a>
-                                <a href="#" class="btn btn-small">Code</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-card">
-                        <div class="project-image">
-                            <div class="placeholder-image">
-                                <i class="fas fa-dungeon"></i>
-                            </div>
-                        </div>
-                        <div class="project-info">
-                            <h3>Dungeon Adventure</h3>
-                            <p>2Dローグライクアクションゲーム。AI敵キャラクターとランダムダンジョン生成。</p>
-                            <div class="project-tech">
-                                <span>Unity</span>
-                                <span>C#</span>
-                                <span>Tilemap</span>
-                            </div>
-                            <div class="project-links">
-                                <a href="#" class="btn btn-small">Demo</a>
-                                <a href="#" class="btn btn-small">Code</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-card">
-                        <div class="project-image">
-                            <div class="placeholder-image">
-                                <i class="fas fa-car"></i>
-                            </div>
-                        </div>
-                        <div class="project-info">
-                            <h3>Racing Simulator</h3>
-                            <p>Unreal Engine製のリアルタイム物理レーシングゲーム。</p>
-                            <div class="project-tech">
-                                <span>Unreal Engine</span>
-                                <span>C++</span>
-                                <span>Blueprint</span>
-                            </div>
-                            <div class="project-links">
-                                <a href="#" class="btn btn-small">Demo</a>
-                                <a href="#" class="btn btn-small">Code</a>
-                            </div>
-                        </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </section>
@@ -185,22 +195,22 @@
         <!-- Contact Section -->
         <section id="contact" class="contact">
             <div class="container">
-                <h2>Get In Touch</h2>
+                <h2>リンク一覧</h2>
                 <div class="contact-content">
                     <div class="contact-info">
-                        <p>新しいプロジェクトやコラボレーションの機会をお待ちしています。</p>
+                        <p>メール、GitHub、YouTubeのリンクです。</p>
                         <div class="contact-methods">
-                            <a href="mailto:example@email.com" class="contact-method">
+                            <a href="mailto:myakuru72@gmail.com" class="contact-method">
                                 <i class="fas fa-envelope"></i>
-                                <span>example@email.com</span>
+                                <span>myakuru72@gmail.com</span>
                             </a>
-                            <a href="https://github.com/myakuru" class="contact-method">
+                            <a href="https://github.com/myakuru/3DGamePrograming" class="contact-method">
                                 <i class="fab fa-github"></i>
                                 <span>GitHub</span>
                             </a>
-                            <a href="https://linkedin.com/in/yourprofile" class="contact-method">
-                                <i class="fab fa-linkedin"></i>
-                                <span>LinkedIn</span>
+                            <a href="https://www.youtube.com/watch?v=G5eRSczVDn4" class="contact-method">
+                                <i class="fab fa-youtube"></i>
+                                <span>YouTube</span>
                             </a>
                         </div>
                     </div>
@@ -208,12 +218,6 @@
             </div>
         </section>
     </main>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 山田太郎. All rights reserved.</p>
-        </div>
-    </footer>
 
     <script src="script.js"></script>
 </body>

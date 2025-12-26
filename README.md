@@ -1,5 +1,5 @@
 # Game Programmer Portfolio
-ゲームプログラマー　山田太郎のポートフォリオサイト
+ゲームプログラマー志望　藤堂司恩のポートフォリオサイト
 
 ## 🎮 About Me
 ゲーム開発に情熱を注ぐプログラマーです。Unity、Unreal Engine、C#、C++を使用してインディーゲームから大規模タイトルまで幅広く開発経験があります。
@@ -14,6 +14,6 @@
 詳細な作品については各プロジェクトページをご覧ください。
 
 ## 📞 Contact
-- Email: example@email.com
-- GitHub: [@myakuru](https://github.com/myakuru)
-- LinkedIn: [プロフィール](https://linkedin.com/in/yourprofile)
+- Email: myakuru72@gmail.com
+- GitHub: [@myakuru](https://github.com/myakuru/3DGamePrograming)
+- YouTube: [YouTube](https://www.youtube.com/watch?v=G5eRSczVDn4)

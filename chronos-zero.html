@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chronos Zero - プロジェクト詳細 | myakuru</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html"><h2>Todo Shion's Portfolio</h2></a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#introduction">About Me</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero project-hero-section hero-with-background">
+            <div class="hero-background">
+                <img src="images/Game.png" alt="Chronos Zero ゲーム画面" 
+                     onerror="this.style.display='none'; this.parentElement.classList.add('fallback-bg');">
+                <div class="hero-overlay"></div>
+            </div>
+            
+            <div class="hero-content hero-overlay-content">
+                <div class="project-header">
+                    <a href="index.html#projects" class="back-btn back-btn-overlay">
+                        <i class="fas fa-arrow-left"></i> プロジェクト一覧に戻る
+                    </a>
+                    <h1 class="project-title-overlay">【Chronos Zero】</h1>
+                    <p class="project-subtitle-overlay">3Dスタイリッシュアクションゲーム<br>（就活作品）</p>
+                    <div class="hero-buttons hero-overlay-buttons">
+                        <a href="https://github.com/myakuru/3DGamePrograming" target="_blank" class="btn btn-primary btn-large btn-overlay">
+                            <i class="fab fa-github"></i> ソースコード
+                        </a>
+                        <a href="https://www.youtube.com/watch?v=G5eRSczVDn4" target="_blank" class="btn btn-secondary btn-large btn-overlay">
+                            <i class="fab fa-youtube"></i> 動画を見る
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Details -->
+        <section id="project-overview" class="project-details-simple">
+            <div class="container">
+                <h2>プロジェクト概要</h2>
+                <div class="project-overview-content">
+                    <div class="overview-description">
+                        <p>
+                            Chronos Zeroは、就活作品として制作した3Dスタイリッシュアクションゲームです。
+                            C++とDirectXを使用してImGuiを使用して開発ツールを作成し、
+                            様々なシェーダー技術とアクションゲームに必要な要素を実装しました。
+                            プレイヤーは制限時間内に敵を倒し、スコアを競います。
+                        </p>
+                    </div>
+                    
+                    <div class="project-info-grid">
+                        <div class="info-card">
+                            <div class="card-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <div class="card-content">
+                                <h4>開発期間</h4>
+                                <p>4ヶ月</p>
+                            </div>
+                        </div>
+                        
+                        <div class="info-card">
+                            <div class="card-icon">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="card-content">
+                                <h4>開発体制</h4>
+                                <p>個人制作</p>
+                            </div>
+                        </div>
+                        
+                        <div class="info-card tech-card">
+                            <div class="card-icon">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <div class="card-content">
+                                <h4>主要技術</h4>
+                                <div class="tech-tags">
+                                    <span class="tech-tag cpp">C++</span>
+                                    <span class="tech-tag directx">DirectX</span>
+                                    <span class="tech-tag hlsl">HLSL</span>
+                                    <span class="tech-tag imgui">ImGui</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Video Section -->
+        <section id="game-video" class="game-video-section">
+            <div class="container">
+                <h2>ゲームプレイ動画</h2>
+                <div class="video-content">
+                    <div class="video-description">
+                        <p>実際のゲームプレイの様子をご覧ください。シェーダー効果やアクション要素が確認できます。</p>
+                    </div>
+                    <div class="main-video">
+                        <div class="video-wrapper">
+                            <iframe 
+                                src="https://www.youtube.com/embed/G5eRSczVDn4"
+                                title="YouTube video player" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                referrerpolicy="strict-origin-when-cross-origin" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        <div class="video-buttons">
+                            <a href="https://www.youtube.com/watch?v=G5eRSczVDn4" target="_blank" class="btn btn-small youtube-btn">
+                                <i class="fab fa-youtube"></i> YouTubeで見る
+                            </a>
+                            <a href="https://github.com/myakuru/3DGamePrograming" target="_blank" class="btn btn-small github-btn">
+                                <i class="fab fa-github"></i> ソースコード
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Implementation Section -->
+        <section id="technical-details" class="introduction technical-section">
+            <div class="container">
+                <h2>技術的な実装</h2>
+                <div class="intro-content">
+                    <div class="intro-header">
+                        <h3>HLSL シェーダープログラミング</h3>
+                        <p class="intro-summary">
+                            ゲームの視覚的な魅力を高めるために、高度なHLSLシェーダー技術を実装しました。
+                            放射ブラー、画面ノイズ、カスケードシャドウマップ、PBRライティングなど、
+                            多層的なエフェクトでリアルなゲーム体験を実現しています。
+                        </p>
+                    </div>
+                    
+                    <div class="shader-tabs-container">
+                        <!-- シェーダータブナビゲーション -->
+                        <div class="shader-tabs">
+                            <div class="tab-nav">
+                                <button class="tab-button active" data-tab="blur">放射ブラー</button>
+                                <button class="tab-button" data-tab="noise">画面ノイズ</button>
+                                <button class="tab-button" data-tab="shadow">シャドウマップ</button>
+                                <button class="tab-button" data-tab="pbr">PBRライティング</button>
+                            </div>
+                            
+                            <!-- タブコンテンツ -->
+                            <div class="tab-content">
+                                        <!-- 放射ブラー -->
+                                        <div class="tab-panel active" id="blur-panel">
+                                            <div class="shader-item">
+                                                <h5>放射ブラー</h5>
+                                                <div class="shader-content">
+                                                    <div class="shader-description">
+                                                        <p>画面中心から外側に向かってブラー効果を適用し、スピード感のある演出を実現</p>
+                                                        
+                                                        <div class="shader-algorithm">
+                                                            <h6><i class="fas fa-cogs"></i> アルゴリズム解説</h6>
+                                                            <div class="algorithm-steps">
+                                                                <div class="step">
+                                                                    <span class="step-number">1</span>
+                                                                    <p>中心点からの距離を計算し、距離に応じたブラー強度を決定</p>
+                                                                </div>
+                                                                <div class="step">
+                                                                    <span class="step-number">2</span>
+                                                                    <p>中心方向に向かって複数のサンプル点を設定</p>
+                                                                </div>
+                                                                <div class="step">
+                                                                    <span class="step-number">3</span>
+                                                                    <p>各サンプル点の色を取得して加算</p>
+                                                                </div>
+                                                                <div class="step">
+                                                                    <span class="step-number">4</span>
+                                                                    <p>サンプル数で平均化して最終色を出力</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="code-section">
+                                                            <h6><i class="fas fa-code"></i> HLSL実装コード</h6>
+                                                            <div class="code-block">
+                                                                <pre><code>float3 color = float3(0.0f, 0.0f, 0.0f);
+float2 uv = In.UV - g_uvOffset;
+<span class="comment">// ピクセルが中心から遠いほど大きく伸ばす</span>
+float factor = g_strength / g_sampleCount * length(uv);
+
+<span class="comment">// 現在のピクセルからブラー中心方向へ少しずつ寄った複数地点をサンプリング</span>
+for(int i = 0; i < g_sampleCount; i++)
+{
+    <span class="comment">// サンプル数が増えるほどオフセットが大きくなる</span>
+    float offset = 1 - factor * i;
+    color += g_inputTex.Sample(g_ss, uv * offset + g_uvOffset).rgb;
+}
+
+<span class="comment">// 色を戻すために平均化して返す</span>
+return float4(color, 1) / g_sampleCount;</code></pre>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="shader-params">
+                                                            <h6><i class="fas fa-sliders-h"></i> パラメータ説明</h6>
+                                                            <div class="param-grid">
+                                                                <div class="param-item">
+                                                                    <strong>g_uvOffset</strong>
+                                                                    <span>ブラーの中心位置</span>
+                                                                </div>
+                                                                <div class="param-item">
+                                                                    <strong>g_strength</strong>
+                                                                    <span>ブラー効果の強度</span>
+                                                                </div>
+                                                                <div class="param-item">
+                                                                    <strong>g_sampleCount</strong>
+                                                                    <span>サンプリング回数（品質）</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="shader-image">
+                                                        <img src="images/blur.png" alt="放射ブラー効果" 
+                                                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                                        <div class="shader-placeholder" style="display:none;">
+                                                            <i class="fas fa-eye"></i>
+                                                            <p>放射ブラー<br>エフェクト画像</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- 画面ノイズ -->
+                                        <div class="tab-panel" id="noise-panel">
+                                            <div class="shader-item">
+                                                <h5>画面ノイズ</h5>
+                                                <div class="shader-content">
+                                                    <div class="shader-description">
+                                                        <p>ダメージ演出やエフェクト強化のための太い縦帯ノイズ生成システム</p>
+                                                        
+                                                        <div class="shader-algorithm">
+                                                            <h6><i class="fas fa-cogs"></i> アルゴリズム解説</h6>
+                                                            <div class="algorithm-steps">
+                                                                <div class="step">
+                                                                    <span class="step-number">1</span>
+                                                                    <p>画面を128分割して太い縦帯を作成</p>
+                                                                </div>
+                                                                <div class="step">
+                                                                    <span class="step-number">2</span>
+                                                                    <p>各帯ごとに時間ベースのランダムノイズを生成</p>
+                                                                </div>
+                                                                <div class="step">
+                                                                    <span class="step-number">3</span>
+                                                                    <p>UVオフセットでピクセル位置を水平方向にずらす</p>
+                                                                </div>
+                                                                <div class="step">
+                                                                    <span class="step-number">4</span>
+                                                                    <p>ノイズ値を色に加算して画面の乱れを表現</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="code-section">
+                                                            <h6><i class="fas fa-code"></i> HLSL実装コード</h6>
+                                                            <div class="code-block">
+                                                                <pre><code><span class="comment">// 太い縦ノイズ帯を生成</span>
+float verticalBandNoise(float2 uv, float time)
+{
+    <span class="comment">// 画面を128分割（太さ調整）</span>
+    float band = floor(uv.y * 128.0);
+    <span class="comment">// 各帯ごとに同じノイズ値</span>
+    float noise = frac(sin(band + time * 5.0) * 43758.5453) * 2.0 - 1.0;
+    return noise * g_noiseStrength * 0.02;
+}
+
+<span class="comment">// メイン処理</span>
+float2 uv = In.UV;
+if (g_enableNoise == 1)
+{
+    <span class="comment">// UV座標を水平方向にずらす</span>
+    uv.x += verticalBandNoise(uv, g_time);
+}
+
+float3 color = g_inputTex.Sample(g_ss, uv).rgb;
+
+if (g_enableNoise == 1)
+{
+    <span class="comment">// ノイズを色に加算</span>
+    float n = verticalBandNoise(uv, g_time) * 10.0;
+    color = saturate(color + n);
+}</code></pre>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="shader-params">
+                                                            <h6><i class="fas fa-sliders-h"></i> パラメータ説明</h6>
+                                                            <div class="param-grid">
+                                                                <div class="param-item">
+                                                                    <strong>g_noiseStrength</strong>
+                                                                    <span>ノイズの強度調整</span>
+                                                                </div>
+                                                                <div class="param-item">
+                                                                    <strong>g_time</strong>
+                                                                    <span>時間ベースのアニメーション</span>
+                                                                </div>
+                                                                <div class="param-item">
+                                                                    <strong>128.0</strong>
+                                                                    <span>縦帯の分割数（太さ調整）</span>
+                                                                </div>
+                                                                <div class="param-item">
+                                                                    <strong>43758.5453</strong>
+                                                                    <span>ランダム生成用のマジックナンバー</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="shader-image">
+                                                        <img src="images/noise.png" alt="画面ノイズ効果" 
+                                                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                                        <div class="shader-placeholder" style="display:none;">
+                                                            <i class="fas fa-tv"></i>
+                                                            <p>画面ノイズ<br>エフェクト画像</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- カスケードシャドウマップ -->
+                                        <div class="tab-panel" id="shadow-panel">
+                                            <div class="shader-item">
+                                                <h5>カスケードシャドウマップ</h5>
+                                                <div class="shader-content">
+                                                    <div class="shader-description">
+                                                        <p>距離に応じて解像度を調整した高品質な影表現システム</p>
+                                                        
+                                                        <div class="shader-algorithm">
+                                                            <h6><i class="fas fa-cogs"></i> アルゴリズム解説</h6>
+                                                            <div class="algorithm-steps">
+                                                                <div class="step">
+                                                                    <span class="step-number">1</span>
+                                                                    <p>視錐台を距離に応じて複数の領域に分割</p>
+                                                                </div>
+                                                                <div class="step">
+                                                                    <span class="step-number">2</span>
+                                                                    <p>各領域に最適化されたシャドウマップを生成</p>
+                                                                </div>
+                                                                <div class="step">
+                                                                    <span class="step-number">3</span>
+                                                                    <p>ピクセルの深度値に応じて適切なシャドウマップを選択</p>
+                                                                </div>
+                                                                <div class="step">
+                                                                    <span class="step-number">4</span>
+                                                                    <p>複数シャドウマップの境界で補間して滑らかに接続</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="code-section">
+                                                            <h6><i class="fas fa-code"></i> HLSL実装コード</h6>
+                                                            <div class="code-block">
+                                                                <pre><code><span class="comment">// カスケード選択</span>
+int SelectCascade(float depth)
+{
+    for(int i = 0; i < CASCADE_COUNT - 1; i++)
+    {
+        if(depth < g_cascadeDistances[i])
+            return i;
+    }
+    return CASCADE_COUNT - 1;
+}
+
+<span class="comment">// シャドウ計算</span>
+float CalculateShadow(float3 worldPos, float depth)
+{
+    int cascade = SelectCascade(depth);
+    
+    <span class="comment">// 選択されたカスケードの座標変換</span>
+    float4 shadowPos = mul(float4(worldPos, 1.0), g_shadowMatrices[cascade]);
+    shadowPos /= shadowPos.w;
+    
+    <span class="comment">// シャドウマップからサンプリング</span>
+    float shadowDepth = g_shadowMaps[cascade].Sample(g_shadowSampler, shadowPos.xy).r;
+    
+    <span class="comment">// 影判定</span>
+    return shadowPos.z > shadowDepth + SHADOW_BIAS ? 0.0 : 1.0;
+}</code></pre>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="shader-params">
+                                                            <h6><i class="fas fa-sliders-h"></i> パラメータ説明</h6>
+                                                            <div class="param-grid">
+                                                                <div class="param-item">
+                                                                    <strong>CASCADE_COUNT</strong>
+                                                                    <span>分割数（通常4分割）</span>
+                                                                </div>
+                                                                <div class="param-item">
+                                                                    <strong>g_cascadeDistances</strong>
+                                                                    <span>各カスケードの距離境界</span>
+                                                                </div>
+                                                                <div class="param-item">
+                                                                    <strong>SHADOW_BIAS</strong>
+                                                                    <span>シャドウアクネ防止バイアス</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="feature-highlights">
+                                                            <div class="highlight-item">
+                                                                <i class="fas fa-layer-group"></i>
+                                                                <span>複数のシャドウマップを距離別に使い分け</span>
+                                                            </div>
+                                                            <div class="highlight-item">
+                                                                <i class="fas fa-search-plus"></i>
+                                                                <span>近距離は高解像度、遠距離は低解像度で最適化</span>
+                                                            </div>
+                                                            <div class="highlight-item">
+                                                                <i class="fas fa-balance-scale"></i>
+                                                                <span>品質とパフォーマンスのバランスを実現</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="shader-image">
+                                                        <img src="images/shadow.png" alt="カスケードシャドウマップ" 
+                                                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                                        <div class="shader-placeholder" style="display:none;">
+                                                            <i class="fas fa-mountain"></i>
+                                                            <p>シャドウマップ<br>エフェクト画像</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- PBRライティング -->
+                                        <div class="tab-panel" id="pbr-panel">
+                                            <div class="shader-item">
+                                                <h5>PBRベースライティング</h5>
+                                                <div class="shader-content">
+                                                    <div class="shader-description">
+                                                        <p>物理ベースレンダリングによるリアルな光の表現</p>
+                                                        
+                                                        <div class="shader-algorithm">
+                                                            <h6><i class="fas fa-cogs"></i> アルゴリズム解説</h6>
+                                                            <div class="algorithm-steps">
+                                                                <div class="step">
+                                                                    <span class="step-number">1</span>
+                                                                    <p>Cook-Torranceモデルによる鏡面反射計算</p>
+                                                                </div>
+                                                                <div class="step">
+                                                                    <span class="step-number">2</span>
+                                                                    <p>Lambert拡散反射とフレネル項の組み合わせ</p>
+                                                                </div>
+                                                                <div class="step">
+                                                                    <span class="step-number">3</span>
+                                                                    <p>金属度パラメータによる反射特性の調整</p>
+                                                                </div>
+                                                                <div class="step">
+                                                                    <span class="step-number">4</span>
+                                                                    <p>粗さパラメータによる表面の微細構造表現</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="code-section">
+                                                            <h6><i class="fas fa-code"></i> HLSL実装コード</h6>
+                                                            <div class="code-block">
+                                                                <pre><code><span class="comment">// フレネル項（Schlick近似）</span>
+float3 FresnelSchlick(float cosTheta, float3 F0)
+{
+    return F0 + (1.0 - F0) * pow(1.0 - cosTheta, 5.0);
+}
+
+<span class="comment">// 法線分布関数（GGX）</span>
+float DistributionGGX(float NdotH, float roughness)
+{
+    float a = roughness * roughness;
+    float a2 = a * a;
+    float NdotH2 = NdotH * NdotH;
+    
+    float num = a2;
+    float denom = (NdotH2 * (a2 - 1.0) + 1.0);
+    denom = PI * denom * denom;
+    
+    return num / denom;
+}
+
+<span class="comment">// PBRライティング計算</span>
+float3 CalculatePBR(float3 albedo, float metallic, float roughness,
+                    float3 normal, float3 viewDir, float3 lightDir)
+{
+    float3 F0 = lerp(float3(0.04, 0.04, 0.04), albedo, metallic);
+    float3 halfwayDir = normalize(lightDir + viewDir);
+    
+    float NdotV = max(dot(normal, viewDir), 0.0);
+    float NdotL = max(dot(normal, lightDir), 0.0);
+    float NdotH = max(dot(normal, halfwayDir), 0.0);
+    
+    <span class="comment">// Cook-Torrance BRDF</span>
+    float3 F = FresnelSchlick(max(dot(halfwayDir, viewDir), 0.0), F0);
+    float D = DistributionGGX(NdotH, roughness);
+    float G = GeometrySmith(normal, viewDir, lightDir, roughness);
+    
+    float3 numerator = D * G * F;
+    float denominator = 4.0 * NdotV * NdotL + 0.001;
+    float3 specular = numerator / denominator;
+    
+    float3 kS = F;
+    float3 kD = float3(1.0, 1.0, 1.0) - kS;
+    kD *= 1.0 - metallic;
+    
+    return (kD * albedo / PI + specular) * radiance * NdotL;
+}</code></pre>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="shader-params">
+                                                            <h6><i class="fas fa-sliders-h"></i> パラメータ説明</h6>
+                                                            <div class="param-grid">
+                                                                <div class="param-item">
+                                                                    <strong>albedo</strong>
+                                                                    <span>材質の基本色</span>
+                                                                </div>
+                                                                <div class="param-item">
+                                                                    <strong>metallic</strong>
+                                                                    <span>金属度（0.0-1.0）</span>
+                                                                </div>
+                                                                <div class="param-item">
+                                                                    <strong>roughness</strong>
+                                                                    <span>表面の粗さ（0.0-1.0）</span>
+                                                                </div>
+                                                                <div class="param-item">
+                                                                    <strong>F0</strong>
+                                                                    <span>垂直入射時の反射率</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="feature-highlights">
+                                                            <div class="highlight-item">
+                                                                <i class="fas fa-sun"></i>
+                                                                <span>物理的に正確な光の散乱計算</span>
+                                                            </div>
+                                                            <div class="highlight-item">
+                                                                <i class="fas fa-gem"></i>
+                                                                <span>マテリアルの金属度・粗さパラメータ</span>
+                                                            </div>
+                                                            <div class="highlight-item">
+                                                                <i class="fas fa-palette"></i>
+                                                                <span>リアルタイムでの高品質レンダリング</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="shader-image">
+                                                        <img src="images/pbr.png" alt="PBRライティング" 
+                                                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                                        <div class="shader-placeholder" style="display:none;">
+                                                            <i class="fas fa-lightbulb"></i>
+                                                            <p>PBRライティング<br>エフェクト画像</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PDF資料セクション -->
+        <section id="project-resources" class="introduction resources-section">
+            <div class="container">
+                <h2>プロジェクト資料</h2>
+                <div class="intro-content">
+                    <div class="intro-header">
+                        <h3>技術資料とドキュメント</h3>
+                        <p class="intro-summary">
+                            Chronos Zeroの開発過程で作成した技術資料や操作説明書をご覧いただけます。
+                            実装した技術の詳細や開発プロセスについて詳しく記載されています。
+                        </p>
+                    </div>
+                    
+                    <div class="pdf-grid resources-grid">
+                    <!-- 操作説明書 -->
+                    <div class="pdf-item">
+                        <div class="pdf-header">
+                            <h4><i class="fas fa-gamepad"></i> 操作説明書</h4>
+                            <p>ゲームの基本操作とコンボシステムの詳細説明</p>
+                        </div>
+                        <div class="pdf-embed">
+                            <iframe 
+                                src="images/操作説明書.pdf#view=FitH&toolbar=0&navpanes=0" 
+                                title="操作説明書">
+                            </iframe>
+                        </div>
+                        <div class="pdf-controls">
+                            <a href="images/操作説明書.pdf" target="_blank" class="btn btn-small pdf-btn">
+                                <i class="fas fa-external-link-alt"></i> 新しいタブで開く
+                            </a>
+                            <a href="images/操作説明書.pdf" download class="btn btn-small download-btn">
+                                <i class="fas fa-download"></i> ダウンロード
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 開発概要 -->
+                    <div class="pdf-item">
+                        <div class="pdf-header">
+                            <h4><i class="fas fa-code"></i> 開発概要</h4>
+                            <p>プロジェクトの技術的な詳細と開発プロセス</p>
+                        </div>
+                        <div class="pdf-embed">
+                            <iframe 
+                                src="images/開発概要.pdf#view=FitH&toolbar=0&navpanes=0" 
+                                title="開発概要">
+                            </iframe>
+                        </div>
+                        <div class="pdf-controls">
+                            <a href="images/開発概要.pdf" target="_blank" class="btn btn-small pdf-btn">
+                                <i class="fas fa-external-link-alt"></i> 新しいタブで開く
+                            </a>
+                            <a href="images/開発概要.pdf" download class="btn btn-small download-btn">
+                                <i class="fas fa-download"></i> ダウンロード
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 藤堂司恩. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
