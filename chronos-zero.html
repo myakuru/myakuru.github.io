@@ -15,11 +15,9 @@
                 <a href="index.html"><h2>Todo Shion's Portfolio</h2></a>
             </div>
             <ul class="nav-menu">
-                <li><a href="index.html#home">Home</a></li>
-                <li><a href="index.html#introduction">About Me</a></li>
-                <li><a href="index.html#skills">Skills</a></li>
-                <li><a href="index.html#projects">Projects</a></li>
-                <li><a href="index.html#contact">Contact</a></li>
+                    <li><a href="#project-overview">プロジェクト概要</a></li>
+                    <li><a href="#technical-details">技術的な実装</a></li>
+                    <li><a href="#project-resources">プロジェクト資料</a></li>
             </ul>
         </div>
     </nav>
@@ -374,7 +372,7 @@ if (g_enableNoise == 1)
                                                         <div class="code-section">
                                                             <h6><i class="fas fa-code"></i> HLSL実装コード</h6>
                                                             <div class="code-block">
-                                                                <pre><code><span class="comment">// カスケード選択</span>
+ <pre><code><span class="comment">// カスケード選択</span>
 int SelectCascade(float depth)
 {
     for(int i = 0; i < CASCADE_COUNT - 1; i++)
@@ -653,6 +651,28 @@ float3 CalculatePBR(float3 albedo, float metallic, float roughness,
         </div>
     </footer>
 
+        <!-- トップに戻るボタン -->
+        <button id="backToTopBtn" title="トップに戻る">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+
     <script src="script.js"></script>
+    </body>
+    </body>
+    <script>
+    // トップに戻るボタンの表示制御
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 200) {
+            backToTopBtn.style.display = 'block';
+        } else {
+            backToTopBtn.style.display = 'none';
+        }
+    });
+    // スムーズスクロールでトップへ
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    </script>
 </body>
 </html>
