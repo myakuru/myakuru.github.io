@@ -119,6 +119,7 @@
                                 title="YouTube video player" 
                                 frameborder="0" 
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                    <pre><code><span class="comment">//-------------------------------</span>
                                 referrerpolicy="strict-origin-when-cross-origin" 
                                 allowfullscreen>
                             </iframe>
@@ -156,7 +157,7 @@
                             <div class="tab-nav">
                                 <button class="tab-button active" data-tab="blur">放射ブラー</button>
                                 <button class="tab-button" data-tab="noise">画面ノイズ</button>
-                                <button class="tab-button" data-tab="shadow">シャドウマップ</button>
+                                <button class="tab-button" data-tab="shadow">カスケードシャドウマップ</button>
                                 <button class="tab-button" data-tab="pbr">PBRライティング</button>
                             </div>
                             
@@ -242,6 +243,8 @@ return float4(color, 1) / g_sampleCount;</code></pre>
                                                 </div>
                                             </div>
                                         </div>
+
+                                        
                                         
                                         <!-- 画面ノイズ -->
                                         <div class="tab-panel" id="noise-panel">
@@ -343,6 +346,14 @@ if (g_enableNoise == 1)
                                         <div class="tab-panel" id="shadow-panel">
                                             <div class="shader-item">
                                                 <h5>カスケードシャドウマップ</h5>
+                                                <div class="shader-image">
+                                                    <img src="images/CSM.png" alt="カスケードシャドウマップ" 
+                                                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                                    <div class="shader-placeholder" style="display:none;">
+                                                        <i class="fas fa-mountain"></i>
+                                                        <p>シャドウマップ<br>エフェクト画像</p>
+                                                    </div>
+                                                </div>
                                                 <div class="shader-content">
                                                     <div class="shader-description">
                                                         <p>距離に応じて解像度を調整した高品質な影表現システム</p>
@@ -372,32 +383,83 @@ if (g_enableNoise == 1)
                                                         <div class="code-section">
                                                             <h6><i class="fas fa-code"></i> HLSL実装コード</h6>
                                                             <div class="code-block">
- <pre><code><span class="comment">// カスケード選択</span>
-int SelectCascade(float depth)
+<span class="comment">//-------------------------------</span>
+<span class="comment">// シャドウマッピング(影判定) - 平行光用（PCF 3x3, 通常サンプラ＋手動比較）</span>
+<span class="comment">//-------------------------------</span>
+
+        <pre><code>
+<pre><code>
+// シャドウの可視性係数（1.0=完全にライトが当たる、0.0=完全に影）
+float shadow = 1.0f;
+
+// 深度比較時のバイアス（表面の自己シャドウ化=アクロニーングを軽減）
+const float bias = 0.0015f;
+
+// 有効なカスケードが見つかったかどうか
+bool cascadeFound = false;
+
+// PCF平均可視性（0.0=遮蔽、1.0=非遮蔽）
+float visibility = 1.0f;
+
+// PCFフィルタのテクセルステップ（シャドウマップ解像度に合わせて調整推奨）
+// 例: 2048x2048 の場合は 1/2048 を指定
+const float2 pcfStep = float2(1.0f / 2048.0f, 1.0f / 2048.0f);
+
+// 3つのカスケードシャドウマップを順にチェック
+for (int cascadeIndex = 0; cascadeIndex < 3; cascadeIndex++)
 {
-    for(int i = 0; i < CASCADE_COUNT - 1; i++)
+    // ライトのクリップ空間での深度値（z/w）。0～1に収まっている場合のみ有効
+    float zInLVP = In.posInLVP[cascadeIndex].z / In.posInLVP[cascadeIndex].w;
+    if (zInLVP >= 0.0f && zInLVP <= 1.0f)
     {
-        if(depth < g_cascadeDistances[i])
-            return i;
+        // ライトのクリップ空間のXY（x/w, y/w）をNDC(-1～1)からUV(0～1)へ変換
+        float2 shadowMapUV = In.posInLVP[cascadeIndex].xy / In.posInLVP[cascadeIndex].w;
+        shadowMapUV *= float2(0.5f, -0.5f); // xは0.5倍、yは反転して0.5倍
+        shadowMapUV += 0.5f; // -1～1 を 0～1 にシフト
+
+        // シャドウマップのUV範囲内であるか確認（スキップで範囲外のサンプリングを防止）
+        if (shadowMapUV.x >= 0.0f && shadowMapUV.x <= 1.0f
+            && shadowMapUV.y >= 0.0f && shadowMapUV.y <= 1.0f)
+        {
+            // ライト空間の現在ピクセル深度にバイアスを引いて比較用深度を作成
+            float compareDepth = saturate(zInLVP - bias);
+
+            // 3x3 PCFカーネル（通常サンプラで取得し、手動比較）
+            float sum = 0.0f;
+            [unroll]
+            for (int oy = -1; oy <= 1; ++oy)
+            {
+                [unroll]
+                for (int ox = -1; ox <= 1; ++ox)
+                {
+                    float2 uv = shadowMapUV + float2(ox, oy) * pcfStep;
+                    uv = saturate(uv); // 範囲外サンプリングの暴発防止
+
+                    // シャドウマップ深度を通常サンプラで取得
+                    float sampledDepth = g_dirShadowMap[cascadeIndex].Sample(g_ss, uv).r;
+
+                    // 手動比較：非遮蔽なら1、遮蔽なら0
+                    sum += (sampledDepth > compareDepth) ? 1.0f : 0.0f;
+                }
+            }
+
+            visibility = sum / 9.0f;
+
+            // 使用するカスケードが決定したことを記録
+            cascadeFound = true;
+
+            // 最初に適合したカスケードで確定し、それ以上のチェックを打ち切る
+            break;
+        }
     }
-    return CASCADE_COUNT - 1;
 }
 
-<span class="comment">// シャドウ計算</span>
-float CalculateShadow(float3 worldPos, float depth)
+// 有効なカスケードが見つかった場合、可視性をシャドウ係数として使用
+if (cascadeFound)
 {
-    int cascade = SelectCascade(depth);
-    
-    <span class="comment">// 選択されたカスケードの座標変換</span>
-    float4 shadowPos = mul(float4(worldPos, 1.0), g_shadowMatrices[cascade]);
-    shadowPos /= shadowPos.w;
-    
-    <span class="comment">// シャドウマップからサンプリング</span>
-    float shadowDepth = g_shadowMaps[cascade].Sample(g_shadowSampler, shadowPos.xy).r;
-    
-    <span class="comment">// 影判定</span>
-    return shadowPos.z > shadowDepth + SHADOW_BIAS ? 0.0 : 1.0;
-}</code></pre>
+    shadow = visibility; // 0=遮蔽（影）、1=非遮蔽（ライトが当たる）
+}
+</pre></code>
                                                             </div>
                                                         </div>
 
@@ -405,16 +467,8 @@ float CalculateShadow(float3 worldPos, float depth)
                                                             <h6><i class="fas fa-sliders-h"></i> パラメータ説明</h6>
                                                             <div class="param-grid">
                                                                 <div class="param-item">
-                                                                    <strong>CASCADE_COUNT</strong>
-                                                                    <span>分割数（通常4分割）</span>
-                                                                </div>
-                                                                <div class="param-item">
-                                                                    <strong>g_cascadeDistances</strong>
-                                                                    <span>各カスケードの距離境界</span>
-                                                                </div>
-                                                                <div class="param-item">
-                                                                    <strong>SHADOW_BIAS</strong>
-                                                                    <span>シャドウアクネ防止バイアス</span>
+                                                                    <strong>cascadeIndex</strong>
+                                                                    <span>分割数（通常3分割）</span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -434,150 +488,154 @@ float CalculateShadow(float3 worldPos, float depth)
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="shader-image">
-                                                        <img src="images/shadow.png" alt="カスケードシャドウマップ" 
-                                                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                                                        <div class="shader-placeholder" style="display:none;">
-                                                            <i class="fas fa-mountain"></i>
-                                                            <p>シャドウマップ<br>エフェクト画像</p>
+                                                </div>
+                                             </div>
+                                        </div>
+                                    </div>
+
+                                
+                                    <!-- PBRライティング -->
+                                    <div class="tab-panel" id="pbr-panel">
+                                        <div class="shader-item">
+                                            <h5>PBRライティング</h5>
+                                            <div class="shader-image">
+                                                <img src="images/PBR.png" alt="PBRライティング" 
+                                                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                                <div class="shader-placeholder" style="display:none;">
+                                                    <i class="fas fa-gem"></i>
+                                                    <p>PBR<br>エフェクト画像</p>
+                                                </div>
+                                            </div>
+                                            <div class="shader-content">
+                                                <div class="shader-description">
+                                                    <p>物理ベースレンダリング（PBR）は、現実世界の光とマテリアルの相互作用を物理的に近似する手法です。<br>
+                                                        本実装ではDisney DiffuseとCook-Torrance（GGX分布・Schlickのフレネル近似・Smithジオメトリ）を組み合わせ、金属・非金属の質感や粗さの表現を行っています。</p>
+                                                </div>
+                                                <div class="shader-algorithm">
+                                                    <h6><i class="fas fa-cogs"></i> アルゴリズム解説</h6>
+                                                    <div class="algorithm-steps">
+                                                        <div class="step">
+                                                            <span class="step-number">1</span>
+                                                            <p>法線、ベースカラー（albedo）、metallic、roughness を取得</p>
+                                                        </div>
+                                                        <div class="step">
+                                                            <span class="step-number">2</span>
+                                                            <p>スペキュラ成分は Cook-Torrance（GGX+D*G*F / (4*NdotV*NdotL)）で計算</p>
+                                                        </div>
+                                                        <div class="step">
+                                                            <span class="step-number">3</span>
+                                                            <p>拡散成分は Disney Diffuse を用いて調整された拡散反射を計算</p>
+                                                        </div>
+                                                        <div class="step">
+                                                            <span class="step-number">4</span>
+                                                            <p>kS（鏡面反射比）と kD（拡散反射比）で合成し、ライト色・NdotL・シャドウを乗算して寄与を加える</p>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- PBRライティング -->
-                                        <div class="tab-panel" id="pbr-panel">
-                                            <div class="shader-item">
-                                                <h5>PBRベースライティング</h5>
-                                                <div class="shader-content">
-                                                    <div class="shader-description">
-                                                        <p>物理ベースレンダリングによるリアルな光の表現</p>
-                                                        
-                                                        <div class="shader-algorithm">
-                                                            <h6><i class="fas fa-cogs"></i> アルゴリズム解説</h6>
-                                                            <div class="algorithm-steps">
-                                                                <div class="step">
-                                                                    <span class="step-number">1</span>
-                                                                    <p>Cook-Torranceモデルによる鏡面反射計算</p>
-                                                                </div>
-                                                                <div class="step">
-                                                                    <span class="step-number">2</span>
-                                                                    <p>Lambert拡散反射とフレネル項の組み合わせ</p>
-                                                                </div>
-                                                                <div class="step">
-                                                                    <span class="step-number">3</span>
-                                                                    <p>金属度パラメータによる反射特性の調整</p>
-                                                                </div>
-                                                                <div class="step">
-                                                                    <span class="step-number">4</span>
-                                                                    <p>粗さパラメータによる表面の微細構造表現</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="code-section">
-                                                            <h6><i class="fas fa-code"></i> HLSL実装コード</h6>
-                                                            <div class="code-block">
-                                                                <pre><code><span class="comment">// フレネル項（Schlick近似）</span>
-float3 FresnelSchlick(float cosTheta, float3 F0)
-{
-    return F0 + (1.0 - F0) * pow(1.0 - cosTheta, 5.0);
+                                                <div class="code-section">
+                                                    <h6><i class="fas fa-code"></i> HLSL実装コード</h6>
+                                                    <div class="code-block">
+<pre><code>//===============================
+// PBR(Disney + Cook-Torrance) ヘルパ
+//===============================
+float Pow5(float x) {
+    float x2 = x * x;
+    return x2 * x2 * x;
 }
 
-<span class="comment">// 法線分布関数（GGX）</span>
-float DistributionGGX(float NdotH, float roughness)
-{
-    float a = roughness * roughness;
-    float a2 = a * a;
-    float NdotH2 = NdotH * NdotH;
-    
-    float num = a2;
-    float denom = (NdotH2 * (a2 - 1.0) + 1.0);
-    denom = PI * denom * denom;
-    
-    return num / denom;
+float DistributionGGX(float NdotH, float alpha) {
+    float a2 = alpha * alpha;
+    float d = (NdotH * NdotH) * (a2 - 1.0) + 1.0;
+    return a2 / max(PI * d * d, 1e-7);
 }
 
-<span class="comment">// PBRライティング計算</span>
-float3 CalculatePBR(float3 albedo, float metallic, float roughness,
-                    float3 normal, float3 viewDir, float3 lightDir)
+float GeometrySchlickGGX(float NdotX, float k) {
+    return NdotX / (NdotX * (1.0 - k) + k);
+}
+
+float GeometrySmith(float NdotV, float NdotL, float roughness) {
+    float r = max(roughness, 1e-4);
+    float k = (r + 1.0) * (r + 1.0) * 0.125;
+    float ggxV = GeometrySchlickGGX(NdotV, k);
+    float ggxL = GeometrySchlickGGX(NdotL, k);
+    return ggxV * ggxL;
+}
+
+float3 FresnelSchlick(float cosTheta, float3 F0) {
+    return F0 + (1.0 - F0) * Pow5(1.0 - cosTheta);
+}
+
+float3 DisneyDiffuse(float3 albedo, float NdotV, float NdotL, float LdotH, float roughness) {
+    float FD90 = 0.5 + 2.0 * LdotH * LdotH * roughness;
+    float FL = 1.0 + (FD90 - 1.0) * Pow5(1.0 - NdotL);
+    float FV = 1.0 + (FD90 - 1.0) * Pow5(1.0 - NdotV);
+    return (albedo / PI) * (FL * FV);
+}
+
+//-------------------------
+// 平行光 (Disney + Cook-Torrance)
+//-------------------------
 {
-    float3 F0 = lerp(float3(0.04, 0.04, 0.04), albedo, metallic);
-    float3 halfwayDir = normalize(lightDir + viewDir);
-    
-    float NdotV = max(dot(normal, viewDir), 0.0);
-    float NdotL = max(dot(normal, lightDir), 0.0);
-    float NdotH = max(dot(normal, halfwayDir), 0.0);
-    
-    <span class="comment">// Cook-Torrance BRDF</span>
-    float3 F = FresnelSchlick(max(dot(halfwayDir, viewDir), 0.0), F0);
-    float D = DistributionGGX(NdotH, roughness);
-    float G = GeometrySmith(normal, viewDir, lightDir, roughness);
-    
-    float3 numerator = D * G * F;
-    float denominator = 4.0 * NdotV * NdotL + 0.001;
-    float3 specular = numerator / denominator;
-    
+    float3 L = normalize(-g_DL_Dir);
+    float3 V = normalize(vCam);
+    float3 H = normalize(L + V);
+
+    float NdotL = saturate(dot(wN, L));
+    float NdotV = saturate(dot(wN, V));
+    float NdotH = saturate(dot(wN, H));
+    float LdotH = saturate(dot(L, H));
+
+    // BRDF 構成要素
+    float D = DistributionGGX(NdotH, alpha);
+    float G = GeometrySmith(NdotV, NdotL, roughness);
+    float3 F = FresnelSchlick(saturate(dot(H, V)), F0);
+    float3 specBRDF = (D * G) * F / max(4.0 * NdotV * NdotL, 1e-4); // Cook-Torrance（鏡面反射計算）
+
+    // エネルギー保存: kS=F, kD=(1-kS)*(1-metallic)
     float3 kS = F;
-    float3 kD = float3(1.0, 1.0, 1.0) - kS;
-    kD *= 1.0 - metallic;
-    
-    return (kD * albedo / PI + specular) * radiance * NdotL;
-}</code></pre>
-                                                            </div>
-                                                        </div>
+    float3 kD = (1.0 - kS) * (1.0 - metallic);
 
-                                                        <div class="shader-params">
-                                                            <h6><i class="fas fa-sliders-h"></i> パラメータ説明</h6>
-                                                            <div class="param-grid">
-                                                                <div class="param-item">
-                                                                    <strong>albedo</strong>
-                                                                    <span>材質の基本色</span>
-                                                                </div>
-                                                                <div class="param-item">
-                                                                    <strong>metallic</strong>
-                                                                    <span>金属度（0.0-1.0）</span>
-                                                                </div>
-                                                                <div class="param-item">
-                                                                    <strong>roughness</strong>
-                                                                    <span>表面の粗さ（0.0-1.0）</span>
-                                                                </div>
-                                                                <div class="param-item">
-                                                                    <strong>F0</strong>
-                                                                    <span>垂直入射時の反射率</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+    // Disney Diffuse（拡散反射計算）
+    float3 diffuseBRDF = DisneyDiffuse(baseColor.rgb, NdotV, NdotL, LdotH, roughness);
 
-                                                        <div class="feature-highlights">
-                                                            <div class="highlight-item">
-                                                                <i class="fas fa-sun"></i>
-                                                                <span>物理的に正確な光の散乱計算</span>
-                                                            </div>
-                                                            <div class="highlight-item">
-                                                                <i class="fas fa-gem"></i>
-                                                                <span>マテリアルの金属度・粗さパラメータ</span>
-                                                            </div>
-                                                            <div class="highlight-item">
-                                                                <i class="fas fa-palette"></i>
-                                                                <span>リアルタイムでの高品質レンダリング</span>
-                                                            </div>
-                                                        </div>
+    // 放射照度項 (ライト色) を掛け、NdotLで重み付け
+    float3 lightColor = g_DL_Color;
+    float3 contrib = (kD * diffuseBRDF + specBRDF) * lightColor * NdotL;
+
+    // 透明度とシャドウ
+    outColor += contrib * baseColor.a * shadow;
+}
+</code></pre>
                                                     </div>
-                                                    <div class="shader-image">
-                                                        <img src="images/pbr.png" alt="PBRライティング" 
-                                                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                                                        <div class="shader-placeholder" style="display:none;">
-                                                            <i class="fas fa-lightbulb"></i>
-                                                            <p>PBRライティング<br>エフェクト画像</p>
+                                                </div>
+                                                <div class="shader-params">
+                                                    <h6><i class="fas fa-sliders-h"></i> パラメータ説明</h6>
+                                                    <div class="param-grid">
+                                                        <div class="param-item">
+                                                            <strong>baseColor</strong>
+                                                            <span>ベースカラー（albedo）</span>
+                                                        </div>
+                                                        <div class="param-item">
+                                                            <strong>metallic</strong>
+                                                            <span>金属度（0=非金属, 1=金属）</span>
+                                                        </div>
+                                                        <div class="param-item">
+                                                            <strong>roughness</strong>
+                                                            <span>表面の粗さ</span>
+                                                        </div>
+                                                        <div class="param-item">
+                                                            <strong>F0</strong>
+                                                            <span>入射角0度での反射率</span>
+                                                        </div>
+                                                        <div class="param-item">
+                                                            <strong>alpha</strong>
+                                                            <span>粗さから導出される分布パラメータ</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                            </div>
-                        </div>
+                                    </div>
                     </div>
                 </div>
             </div>

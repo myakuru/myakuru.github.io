@@ -1124,7 +1124,13 @@ section h2 {
 }
 
 .tab-content {
-    min-height: 500px;
+    min-height: 0px;
+}
+
+@media (max-width: 768px) {
+    .tab-content {
+        min-height: 100px;
+    }
 }
 
 .tab-panel {
